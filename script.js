@@ -1,5 +1,5 @@
 const buttonsContainer = document.getElementById("buttons-container");
-
+const calculatorScreen = document.getElementById("calculator-screen");
 // Not all symbols have been implemented but these will do for now
 const symbolButtons = [
     7, 8, 9, '/',
