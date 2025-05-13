@@ -1,16 +1,23 @@
 #outer-screen{
     display: flex;
     margin: auto;
-    background: cyan;
+    background: aliceblue;
     width: 100%;
     max-width: 500px;
+    height: 100px;
+    border: 2px solid black;
+    align-items: center;
 }
 #calculator-screen{
     display: flex;
     margin:auto;
     width: 100%;
     max-width: 500px;
-    justify-content: center;
+    font-family: monospace;
+    font-size: 2rem;
+    padding: 20px;
+    justify-content: right;
+    /* border-radius: 5px; */
 }
 
 #buttons-container{
@@ -32,4 +39,10 @@
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 30px;
+    background-color: azure;
+}
+
+button:active{
+    transform: scale(0.95);
+    background-color: lightblue;
 }

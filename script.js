@@ -12,7 +12,18 @@ symbolButtons.forEach(symbol =>{
     const button = document.createElement("button");
     button.textContent = symbol;
     button.addEventListener("click",()=>{
-        console.log(`Button ${symbol} has been clicked. :O`);
+        // console.log(`Button ${symbol} has been clicked. :O`);
+        if(symbol === 'A/C'){
+            calculatorScreen.textContent = '0';
+        }else if(symbol === '='){
+            try{
+                calculatorScreen.textContent = eval(calculatorScreen.textContent);
+            }catch{
+                calculatorScreen.textContent = 'Error';
+            }
+        }else{
+            calculatorScreen.textContent += symbol;
+        }
     });
     buttonsContainer.appendChild(button);
 });
