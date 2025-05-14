@@ -2,10 +2,11 @@ const buttonsContainer = document.getElementById("buttons-container");
 const calculatorScreen = document.getElementById("calculator-screen");
 // Not all symbols have been implemented but these will do for now
 const symbolButtons = [
+    '', '', '%', 'clear',
     7, 8, 9, '/',
     4, 5, 6, '*',
     1, 2, 3, '-',
-    'A/C', 0, '.', '='
+    0, '.', '=', '+'
 ];
 
 symbolButtons.forEach(symbol =>{
@@ -13,11 +14,11 @@ symbolButtons.forEach(symbol =>{
     button.textContent = symbol;
     button.addEventListener("click",()=>{
         // console.log(`Button ${symbol} has been clicked. :O`);
-        if(symbol === 'A/C'){
+        if(symbol === 'clear'){
             calculatorScreen.textContent = '0';
         }else if(symbol === '='){
             try{
-                calculatorScreen.textContent = eval(calculatorScreen.textContent);
+                calculatorScreen.textContent = operate(calculatorScreen.textContent);
             }catch{
                 calculatorScreen.textContent = 'Error';
             }
@@ -28,7 +29,9 @@ symbolButtons.forEach(symbol =>{
     buttonsContainer.appendChild(button);
 });
 
-
+function operate(input){
+    
+}
 // adds two numbers
 function add(num1, num2){
     return num1 + num2;
