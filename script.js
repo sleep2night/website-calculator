@@ -15,7 +15,7 @@ symbolButtons.forEach(symbol =>{
     button.addEventListener("click",()=>{
         // console.log(`Button ${symbol} has been clicked. :O`);
         if(symbol === 'clear'){
-            calculatorScreen.textContent = '0';
+            calculatorScreen.textContent = '';
         }else if(symbol === '='){
             try{
                 calculatorScreen.textContent = operate(calculatorScreen.textContent);
@@ -30,8 +30,44 @@ symbolButtons.forEach(symbol =>{
 });
 
 function operate(input){
-    
+    // return eval(input); 
+    let num1 = 0;
+    let num2 = 0;
+    let plus = input.indexOf("+");
+   
+
+    // for adding
+    if(plus !== -1){
+        num1 = Number(input.slice(0, plus));
+        num2 = Number(input.slice(plus + 1));
+        return add(num1, num2);
+    }
+
+    // for subtracting
+    let sub = input.indexOf("-");
+    if(sub !== -1){
+        num1 = Number(input.slice(0, sub));
+        num2 = Number(input.slice(sub + 1));
+        return subtract(num1, num2);
+    }
+
+    // for multiplying
+    let mult = input.indexOf("*");
+    if(mult !== -1){
+        num1 = Number(input.slice(0, mult));
+        num2 = Number(input.slice(mult + 1));
+        return multiply(num1, num2);
+    }
+
+    // for dividing
+    let d = input.indexOf("/");
+    if(d !== -1){
+        num1 = Number(input.slice(0, d));
+        num2 = Number(input.slice(d + 1));
+        return divide(num1, num2);
+    }
 }
+
 // adds two numbers
 function add(num1, num2){
     return num1 + num2;
