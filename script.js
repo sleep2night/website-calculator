@@ -25,7 +25,7 @@ symbolButtons.forEach(symbol =>{
             addNumber(symbol);
         }else if(['+', '-', '*', '/'].includes(symbol)){
             selectOperator(symbol);
-        }
+        }else if(symbol === '=') operate();
         updateScreen();
     });
     buttonsContainer.appendChild(button);
@@ -60,7 +60,17 @@ function selectOperator(symbol){
 }
 
 function operate(){
-    
+    if(isNaN(previousNum) || isNaN(currentNum)) return;
+    let firstNum = parseFloat(previousNum);
+    let secondNum = parseFloat(currentNum);
+    let answer = 0;
+    if(operation === '+') answer = add(firstNum, secondNum);
+    else if(operation == '-') answer = subtract(firstNum, secondNum);
+    else if(operation == '*') answer = multiply(firstNum, secondNum);
+    else if(operation == '/') answer = divide(firstNum, secondNum);
+    currentNum = answer;
+    previousNum = "";
+    operation = null;
 }
 
 // May use this when I am calculating more than 2 numbers at the same time in the console
