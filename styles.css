@@ -47,6 +47,7 @@
     max-width: 500px;
     aspect-ratio: 1;
     border: 2px solid black;
+    background-color: #1e1e2f;
 }
 
 #buttons-container > button{

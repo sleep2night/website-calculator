@@ -15,6 +15,7 @@ let previousNum = "";
 let operation = null;
 let divisionByZeroError = false;
 
+// Pressing buttons on calculator
 symbolButtons.forEach(symbol =>{
     const button = document.createElement("button");
     button.textContent = symbol;
@@ -36,6 +37,26 @@ symbolButtons.forEach(symbol =>{
     });
     buttonsContainer.appendChild(button);
 });
+
+// Typing on keyboard
+document.addEventListener("keydown", whenKeyPressed);
+
+function whenKeyPressed(event){
+    const key = event.key;
+    const controlOrCommand = event.ctrlKey || event.metaKey;
+
+    if(key.toLowerCase() === 'c') clear();
+    else if(key === 'Backspace') deleteNum();
+    else if(key === '=' || key === 'Enter') operate();
+    else if(!controlOrCommand){
+        if(!isNaN(key) || ['+', '-', '*', '/'].includes(key)){
+            event.preventDefault();
+            if(!isNaN(key) || key === '.') addNumber(key);
+            else selectOperator(key);
+        }
+    }
+    updateScreen();
+}
 
 function convertPercentToDecimal(){
     if(currentNum === '') return;
@@ -83,8 +104,8 @@ function selectOperator(symbol){
 }
 
 function operate(){
+    if(previousNum === "" || currentNum === "") return;
     if(isNaN(previousNum) || isNaN(currentNum)) return;
-    if(currentNum === "") return;
     let firstNum = parseFloat(previousNum);
     let secondNum = parseFloat(currentNum);
     let answer = 0;
