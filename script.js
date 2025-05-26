@@ -21,8 +21,9 @@ symbolButtons.forEach(symbol =>{
     button.addEventListener("click",()=>{
         // console.log(`Button ${symbol} has been clicked. :O`);
         if(symbol === 'clear') clear();
+
         else if(symbol === 'delete') deleteNum();
-        
+
         else if(symbol === '%') convertPercentToDecimal();
 
         else if(!isNaN(symbol) || symbol === '.') addNumber(symbol);
@@ -67,7 +68,14 @@ function addNumber(num){
 }
 
 function selectOperator(symbol){
-    if(divisionByZeroError || currentNum === "") return;
+    if(divisionByZeroError) return;
+    if(operation && currentNum === ""){
+        operation = symbol;
+        updateScreen();
+        return;
+    }
+    if(currentNum === "") return;
+
     if(previousNum !== "") operate();
     operation = symbol;
     previousNum = currentNum;
@@ -80,9 +88,9 @@ function operate(){
     let secondNum = parseFloat(currentNum);
     let answer = 0;
     if(operation === '+') answer = add(firstNum, secondNum);
-    else if(operation == '-') answer = subtract(firstNum, secondNum);
-    else if(operation == '*') answer = multiply(firstNum, secondNum);
-    else if(operation == '/') {
+    else if(operation === '-') answer = subtract(firstNum, secondNum);
+    else if(operation === '*') answer = multiply(firstNum, secondNum);
+    else if(operation === '/') {
         if(secondNum === 0) {
             divisionByZeroError = true;
         }
