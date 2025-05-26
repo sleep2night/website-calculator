@@ -21,7 +21,8 @@ symbolButtons.forEach(symbol =>{
     button.addEventListener("click",()=>{
         // console.log(`Button ${symbol} has been clicked. :O`);
         if(symbol === 'clear') clear();
-
+        else if(symbol === 'delete') deleteNum();
+        
         else if(symbol === '%') convertPercentToDecimal();
 
         else if(!isNaN(symbol) || symbol === '.') addNumber(symbol);
@@ -66,7 +67,7 @@ function addNumber(num){
 }
 
 function selectOperator(symbol){
-    if(currentNum === "") return;
+    if(divisionByZeroError || currentNum === "") return;
     if(previousNum !== "") operate();
     operation = symbol;
     previousNum = currentNum;
@@ -98,6 +99,9 @@ function operate(){
     operation = null;
 }
 
+function deleteNum(){
+    currentNum = currentNum.toString().slice(0, -1);
+}
 // May use this when I am calculating more than 2 numbers at the same time in the console
 // function operate(input){
 //     let num1 = 0;
