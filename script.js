@@ -19,18 +19,26 @@ symbolButtons.forEach(symbol =>{
     button.textContent = symbol;
     button.addEventListener("click",()=>{
         // console.log(`Button ${symbol} has been clicked. :O`);
-        if(symbol === 'clear'){
-            clear();
-        }else if(!isNaN(symbol) || symbol === '.'){
-            addNumber(symbol);
-        }else if(['+', '-', '*', '/'].includes(symbol)){
-            selectOperator(symbol);
-        }else if(symbol === '=') operate();
+        if(symbol === 'clear') clear();
+
+        else if(symbol === '%') convertPercentToDecimal();
+
+        else if(!isNaN(symbol) || symbol === '.') addNumber(symbol);
+
+        else if(['+', '-', '*', '/'].includes(symbol)) selectOperator(symbol);
+
+        else if(symbol === '=') operate();
+
         updateScreen();
     });
     buttonsContainer.appendChild(button);
 });
 
+function convertPercentToDecimal(){
+    if(currentNum === '') return;
+    let result = divide(parseFloat(currentNum), 100);
+    currentNum = result.toString();
+}
 function clear(){
     currentNum = "";
     previousNum = "";
