@@ -84,6 +84,7 @@ function selectOperator(symbol){
 
 function operate(){
     if(isNaN(previousNum) || isNaN(currentNum)) return;
+    if(currentNum === "") return;
     let firstNum = parseFloat(previousNum);
     let secondNum = parseFloat(currentNum);
     let answer = 0;
