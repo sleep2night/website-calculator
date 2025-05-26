@@ -1,5 +1,6 @@
 const buttonsContainer = document.getElementById("buttons-container");
-const calculatorScreen = document.getElementById("calculator-screen");
+const currentNumberText = document.getElementById("large-text");
+const previousNumberText = document.getElementById("small-text");
 // Not all symbols have been implemented but these will do for now
 const symbolButtons = [
     '', '', '%', 'clear',
@@ -9,64 +10,97 @@ const symbolButtons = [
     0, '.', '=', '+'
 ];
 
+let currentNum = "";
+let previousNum = "";
+let operation = null;
+
 symbolButtons.forEach(symbol =>{
     const button = document.createElement("button");
     button.textContent = symbol;
     button.addEventListener("click",()=>{
         // console.log(`Button ${symbol} has been clicked. :O`);
         if(symbol === 'clear'){
-            calculatorScreen.textContent = '';
-        }else if(symbol === '='){
-            try{
-                calculatorScreen.textContent = operate(calculatorScreen.textContent);
-            }catch{
-                calculatorScreen.textContent = 'Error';
-            }
-        }else{
-            calculatorScreen.textContent += symbol;
+            clear();
+        }else if(!isNaN(symbol) || symbol === '.'){
+            addNumber(symbol);
+        }else if(['+', '-', '*', '/'].includes(symbol)){
+            selectOperator(symbol);
         }
+        updateScreen();
     });
     buttonsContainer.appendChild(button);
 });
 
-function operate(input){
-    // return eval(input); 
-    let num1 = 0;
-    let num2 = 0;
-    let plus = input.indexOf("+");
-   
+function clear(){
+    currentNum = "";
+    previousNum = "";
+    operation = null;
+}
 
-    // for adding
-    if(plus !== -1){
-        num1 = Number(input.slice(0, plus));
-        num2 = Number(input.slice(plus + 1));
-        return add(num1, num2);
-    }
-
-    // for subtracting
-    let sub = input.indexOf("-");
-    if(sub !== -1){
-        num1 = Number(input.slice(0, sub));
-        num2 = Number(input.slice(sub + 1));
-        return subtract(num1, num2);
-    }
-
-    // for multiplying
-    let mult = input.indexOf("*");
-    if(mult !== -1){
-        num1 = Number(input.slice(0, mult));
-        num2 = Number(input.slice(mult + 1));
-        return multiply(num1, num2);
-    }
-
-    // for dividing
-    let d = input.indexOf("/");
-    if(d !== -1){
-        num1 = Number(input.slice(0, d));
-        num2 = Number(input.slice(d + 1));
-        return divide(num1, num2);
+function updateScreen(){
+    currentNumberText.textContent = currentNum;
+    if(operation && previousNum !== ""){
+        previousNumberText.textContent = `${previousNum} ${operation} `;
+    }else{
+        previousNumberText.textContent = "";
     }
 }
+
+function addNumber(num){
+    if(num === '.' && currentNum.includes('.')) return;
+    currentNum += num.toString();
+}
+
+function selectOperator(symbol){
+    if(currentNum === "") return;
+    if(previousNum !== "") operate();
+    operation = symbol;
+    previousNum = currentNum;
+    currentNum = "";
+}
+
+function operate(){
+    
+}
+
+// May use this when I am calculating more than 2 numbers at the same time in the console
+// function operate(input){
+//     let num1 = 0;
+//     let num2 = 0;
+//     let plus = input.indexOf("+");
+   
+//     // for adding
+//     if(plus !== -1){
+//         num1 = Number(input.slice(0, plus));
+//         num2 = Number(input.slice(plus + 1));
+//         return add(num1, num2);
+//     }
+
+//     // for subtracting
+//     let sub = input.indexOf("-");
+//     if(sub !== -1){
+//         num1 = Number(input.slice(0, sub));
+//         num2 = Number(input.slice(sub + 1));
+//         return subtract(num1, num2);
+//     }
+
+//     // for multiplying
+//     let mult = input.indexOf("*");
+//     if(mult !== -1){
+//         num1 = Number(input.slice(0, mult));
+//         num2 = Number(input.slice(mult + 1));
+//         return multiply(num1, num2);
+//     }
+
+//     // for dividing
+//     let d = input.indexOf("/");
+//     if(d !== -1){
+//         num1 = Number(input.slice(0, d));
+//         num2 = Number(input.slice(d + 1));
+//         if(num2 === 0) return 'Undefined :( Try again.';
+//         return divide(num1, num2);
+//     }
+// }
 
 // adds two numbers
 function add(num1, num2){
