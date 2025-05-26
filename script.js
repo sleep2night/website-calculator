@@ -3,7 +3,7 @@ const currentNumberText = document.getElementById("large-text");
 const previousNumberText = document.getElementById("small-text");
 // Not all symbols have been implemented but these will do for now
 const symbolButtons = [
-    '', '', '%', 'clear',
+    '', '%', 'delete', 'clear',
     7, 8, 9, '/',
     4, 5, 6, '*',
     1, 2, 3, '-',
@@ -13,6 +13,7 @@ const symbolButtons = [
 let currentNum = "";
 let previousNum = "";
 let operation = null;
+let divisionByZeroError = false;
 
 symbolButtons.forEach(symbol =>{
     const button = document.createElement("button");
@@ -56,6 +57,11 @@ function updateScreen(){
 
 function addNumber(num){
     if(num === '.' && currentNum.includes('.')) return;
+    if(divisionByZeroError) {
+        currentNum = num.toString();
+        divisionByZeroError = false;
+        return;
+    }
     currentNum += num.toString();
 }
 
@@ -75,7 +81,18 @@ function operate(){
     if(operation === '+') answer = add(firstNum, secondNum);
     else if(operation == '-') answer = subtract(firstNum, secondNum);
     else if(operation == '*') answer = multiply(firstNum, secondNum);
-    else if(operation == '/') answer = divide(firstNum, secondNum);
+    else if(operation == '/') {
+        if(secondNum === 0) {
+            divisionByZeroError = true;
+        }
+        else answer = divide(firstNum, secondNum);
+    }
+    if(divisionByZeroError){
+        currentNum = 'Undefined :( Try again.';
+        previousNum = "";
+        operation = null;
+        return;
+    }
     currentNum = answer;
     previousNum = "";
     operation = null;
